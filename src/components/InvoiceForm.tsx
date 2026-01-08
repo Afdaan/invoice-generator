@@ -6,9 +6,10 @@ import { v4 as uuidv4 } from 'uuid';
 interface InvoiceFormProps {
   data: InvoiceData;
   onChange: (data: InvoiceData) => void;
+  theme: 'light' | 'dark';
 }
 
-export default function InvoiceForm({ data, onChange }: InvoiceFormProps) {
+export default function InvoiceForm({ data, onChange, theme }: InvoiceFormProps) {
   const updateField = <K extends keyof InvoiceData>(
     field: K,
     value: InvoiceData[K]
@@ -67,18 +68,35 @@ export default function InvoiceForm({ data, onChange }: InvoiceFormProps) {
     }
   };
 
-  const inputClass =
-    'w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition';
-  const labelClass = 'block text-gray-400 text-sm mb-1';
-  const sectionClass = 'bg-gray-900/50 rounded-xl p-4 space-y-3';
+  const inputClass = `w-full ${
+    theme === 'dark'
+      ? 'bg-gray-800 border-gray-700 text-white focus:ring-blue-500'
+      : 'bg-white border-gray-200 text-gray-900 focus:ring-blue-500 shadow-sm'
+  } border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:border-transparent transition`;
+
+  const labelClass = `block text-sm mb-1 ${
+    theme === 'dark' ? 'text-gray-400' : 'text-gray-600 font-medium'
+  }`;
+  
+  const sectionClass = `${
+    theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-50 border border-gray-200'
+  } rounded-xl p-4 space-y-3`;
+
+  const headingClass = `text-2xl font-bold mb-6 ${
+    theme === 'dark' ? 'text-white' : 'text-gray-900'
+  }`;
+  
+  const subHeadingClass = `text-lg font-semibold mb-3 ${
+    theme === 'dark' ? 'text-white' : 'text-gray-800'
+  }`;
 
   return (
     <div className="space-y-6 p-6 overflow-y-auto max-h-screen">
-      <h2 className="text-2xl font-bold text-white mb-6">Invoice Details</h2>
+      <h2 className={headingClass}>Invoice Details</h2>
 
       {/* Invoice Info */}
       <div className={sectionClass}>
-        <h3 className="text-lg font-semibold text-white mb-3">Invoice Info</h3>
+        <h3 className={subHeadingClass}>Invoice Info</h3>
         <div className="grid grid-cols-3 gap-3">
           <div>
             <label className={labelClass}>Invoice Number</label>
@@ -114,7 +132,7 @@ export default function InvoiceForm({ data, onChange }: InvoiceFormProps) {
 
       {/* From */}
       <div className={sectionClass}>
-        <h3 className="text-lg font-semibold text-white mb-3">From</h3>
+        <h3 className={subHeadingClass}>From</h3>
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className={labelClass}>Company Name</label>
@@ -175,7 +193,7 @@ export default function InvoiceForm({ data, onChange }: InvoiceFormProps) {
 
       {/* To */}
       <div className={sectionClass}>
-        <h3 className="text-lg font-semibold text-white mb-3">Bill To</h3>
+        <h3 className={subHeadingClass}>Bill To</h3>
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className={labelClass}>Company Name</label>
@@ -237,7 +255,7 @@ export default function InvoiceForm({ data, onChange }: InvoiceFormProps) {
       {/* Line Items */}
       <div className={sectionClass}>
         <div className="flex justify-between items-center mb-3">
-          <h3 className="text-lg font-semibold text-white">Items</h3>
+          <h3 className={subHeadingClass}>Items</h3>
           <button
             onClick={addLineItem}
             className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1.5 rounded-lg transition flex items-center gap-1"
@@ -340,7 +358,7 @@ export default function InvoiceForm({ data, onChange }: InvoiceFormProps) {
 
       {/* Payment Details */}
       <div className={sectionClass}>
-        <h3 className="text-lg font-semibold text-white mb-3">Payment Details</h3>
+        <h3 className={subHeadingClass}>Payment Details</h3>
         <div className="grid grid-cols-3 gap-3">
           <div>
             <label className={labelClass}>Bank</label>
@@ -374,7 +392,7 @@ export default function InvoiceForm({ data, onChange }: InvoiceFormProps) {
 
       {/* Note */}
       <div className={sectionClass}>
-        <h3 className="text-lg font-semibold text-white mb-3">Note</h3>
+        <h3 className={subHeadingClass}>Note</h3>
         <textarea
           value={data.note}
           onChange={(e) => updateField('note', e.target.value)}

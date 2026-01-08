@@ -9,23 +9,28 @@ import { generatePDF } from '@/utils/generatePDF';
 export default function Home() {
   const [invoiceData, setInvoiceData] = useState<InvoiceData>(defaultInvoiceData);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
 
   const handleDownload = async () => {
     setIsGenerating(true);
     try {
-      await generatePDF('invoice-preview', invoiceData.invoiceNumber);
+      await generatePDF('invoice-preview', invoiceData.invoiceNumber, theme);
     } finally {
       setIsGenerating(false);
     }
   };
 
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  };
+
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950">
+    <main className={`min-h-screen ${theme === 'dark' ? 'bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950' : 'bg-gray-100'}`}>
       <div className="flex flex-col lg:flex-row min-h-screen">
         {/* Form Side */}
-        <div className="lg:w-1/2 lg:border-r border-gray-800 overflow-y-auto">
-          <div className="sticky top-0 bg-gray-950/80 backdrop-blur-sm border-b border-gray-800 p-4 z-10">
-            <h1 className="text-xl font-bold text-white flex items-center gap-2">
+        <div className={`lg:w-1/2 lg:border-r overflow-y-auto ${theme === 'dark' ? 'border-gray-800' : 'border-gray-200 bg-white'}`}>
+          <div className={`sticky top-0 backdrop-blur-sm border-b p-4 z-10 flex justify-between items-center ${theme === 'dark' ? 'bg-gray-950/80 border-gray-800' : 'bg-white/80 border-gray-200'}`}>
+            <h1 className={`text-xl font-bold flex items-center gap-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
               <svg
                 className="w-6 h-6 text-blue-500"
                 fill="none"
@@ -41,14 +46,28 @@ export default function Home() {
               </svg>
               Invoice Generator
             </h1>
+            <button
+              onClick={toggleTheme}
+              className={`p-2 rounded-lg transition-colors ${theme === 'dark' ? 'bg-gray-800 text-yellow-400 hover:bg-gray-700' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+            >
+              {theme === 'dark' ? (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+              )}
+            </button>
           </div>
-          <InvoiceForm data={invoiceData} onChange={setInvoiceData} />
+          <InvoiceForm data={invoiceData} onChange={setInvoiceData} theme={theme} />
         </div>
 
         {/* Preview Side */}
-        <div className="lg:w-1/2 bg-gray-900/50 flex flex-col">
-          <div className="sticky top-0 bg-gray-900/80 backdrop-blur-sm border-b border-gray-800 p-4 z-10 flex justify-between items-center">
-            <h2 className="text-lg font-semibold text-white">Preview</h2>
+        <div className={`lg:w-1/2 flex flex-col ${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-50'}`}>
+          <div className={`sticky top-0 backdrop-blur-sm border-b p-4 z-10 flex justify-between items-center ${theme === 'dark' ? 'bg-gray-900/80 border-gray-800' : 'bg-white/80 border-gray-200'}`}>
+            <h2 className={`text-lg font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Preview</h2>
             <button
               onClick={handleDownload}
               disabled={isGenerating}
@@ -99,7 +118,7 @@ export default function Home() {
           </div>
           <div className="flex-1 p-6 overflow-auto flex justify-center">
             <div className="shadow-2xl rounded-lg overflow-hidden">
-              <InvoicePreview data={invoiceData} />
+              <InvoicePreview data={invoiceData} theme={theme} />
             </div>
           </div>
         </div>

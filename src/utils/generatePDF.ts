@@ -3,7 +3,8 @@ import jsPDF from 'jspdf';
 
 export async function generatePDF(
   elementId: string,
-  invoiceNumber: string
+  invoiceNumber: string,
+  theme: 'light' | 'dark'
 ): Promise<void> {
   const element = document.getElementById(elementId);
   if (!element) {
@@ -29,8 +30,12 @@ export async function generatePDF(
       format: 'a4',
     });
 
-    // Fill background with dark color (#1a1a1a)
-    pdf.setFillColor(26, 26, 26);
+    // Fill background based on theme
+    if (theme === 'dark') {
+      pdf.setFillColor(26, 26, 26);
+    } else {
+      pdf.setFillColor(255, 255, 255);
+    }
     pdf.rect(0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight(), 'F');
 
     pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);

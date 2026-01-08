@@ -4,9 +4,10 @@ import { InvoiceData } from '@/types/types';
 
 interface InvoicePreviewProps {
   data: InvoiceData;
+  theme: 'light' | 'dark';
 }
 
-export default function InvoicePreview({ data }: InvoicePreviewProps) {
+export default function InvoicePreview({ data, theme }: InvoicePreviewProps) {
   const subtotal = data.items.reduce(
     (sum, item) => sum + item.quantity * item.price,
     0
@@ -24,11 +25,30 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
     }).format(amount);
   };
 
+  const colors = {
+    dark: {
+      bg: '#1a1a1a',
+      text: '#ffffff',
+      muted: '#9ca3af',
+      border: '#374151',
+      companyDetail: '#d1d5db',
+    },
+    light: {
+      bg: '#ffffff',
+      text: '#111827',
+      muted: '#6b7280',
+      border: '#e5e7eb',
+      companyDetail: '#4b5563',
+    },
+  };
+
+  const themeColors = colors[theme];
+
   // Inline styles to avoid Tailwind's lab() colors for PDF generation
   const styles = {
     container: {
-      backgroundColor: '#1a1a1a',
-      color: '#ffffff',
+      backgroundColor: themeColors.bg,
+      color: themeColors.text,
       padding: '32px',
       minHeight: '800px',
       fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace',
@@ -42,10 +62,10 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
       fontSize: '14px',
     },
     label: {
-      color: '#9ca3af',
+      color: themeColors.muted,
     },
     value: {
-      color: '#ffffff',
+      color: themeColors.text,
     },
     grid: {
       display: 'grid',
@@ -54,7 +74,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
       marginBottom: '32px',
     },
     sectionTitle: {
-      color: '#9ca3af',
+      color: themeColors.muted,
       fontSize: '14px',
       marginBottom: '8px',
     },
@@ -63,11 +83,11 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
     },
     companyName: {
       fontWeight: '600',
-      color: '#ffffff',
+      color: themeColors.text,
       marginBottom: '4px',
     },
     companyDetail: {
-      color: '#d1d5db',
+      color: themeColors.companyDetail,
       marginBottom: '4px',
     },
     tableHeader: {
@@ -75,9 +95,9 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
       gridTemplateColumns: '1fr 80px 140px',
       gap: '16px',
       fontSize: '14px',
-      color: '#9ca3af',
+      color: themeColors.muted,
       marginBottom: '8px',
-      borderBottom: '1px solid #374151',
+      borderBottom: `1px solid ${themeColors.border}`,
       paddingBottom: '8px',
     },
     tableRow: {
@@ -86,7 +106,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
       gap: '16px',
       fontSize: '14px',
       padding: '8px 0',
-      color: '#ffffff',
+      color: themeColors.text,
     },
     textCenter: {
       textAlign: 'center' as const,
@@ -95,7 +115,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
       textAlign: 'right' as const,
     },
     totalsSection: {
-      borderTop: '1px solid #374151',
+      borderTop: `1px solid ${themeColors.border}`,
       paddingTop: '16px',
       marginBottom: '32px',
     },
@@ -107,19 +127,19 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
       marginBottom: '8px',
     },
     totalLabel: {
-      color: '#9ca3af',
+      color: themeColors.muted,
     },
     totalValue: {
       width: '140px',
       textAlign: 'right' as const,
-      color: '#ffffff',
+      color: themeColors.text,
     },
     grandTotal: {
       fontSize: '24px',
       fontWeight: 'bold',
       width: '240px',
       textAlign: 'right' as const,
-      color: '#ffffff',
+      color: themeColors.text,
     },
     footer: {
       display: 'grid',
@@ -203,7 +223,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
       <div style={styles.footer}>
         <div>
           <p style={styles.sectionTitle}>Payment details</p>
-          <div style={{ fontSize: '14px', color: '#ffffff' }}>
+          <div style={{ fontSize: '14px', color: themeColors.text }}>
             <p style={{ marginBottom: '4px' }}>Bank: {data.paymentDetails.bank}</p>
             <p style={{ marginBottom: '4px' }}>Account number: {data.paymentDetails.accountNumber},</p>
             <p>Iban: {data.paymentDetails.iban},</p>
@@ -211,7 +231,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
         </div>
         <div>
           <p style={styles.sectionTitle}>Note</p>
-          <p style={{ fontSize: '14px', color: '#ffffff' }}>
+          <p style={{ fontSize: '14px', color: themeColors.text }}>
             {data.note || 'Thanks for great collaboration'}
           </p>
         </div>
