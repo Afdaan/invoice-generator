@@ -72,7 +72,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
     },
     tableHeader: {
       display: 'grid',
-      gridTemplateColumns: '1fr 100px 100px',
+      gridTemplateColumns: '1fr 80px 140px',
       gap: '16px',
       fontSize: '14px',
       color: '#9ca3af',
@@ -82,7 +82,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
     },
     tableRow: {
       display: 'grid',
-      gridTemplateColumns: '1fr 100px 100px',
+      gridTemplateColumns: '1fr 80px 140px',
       gap: '16px',
       fontSize: '14px',
       padding: '8px 0',
@@ -110,14 +110,14 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
       color: '#9ca3af',
     },
     totalValue: {
-      width: '96px',
+      width: '140px',
       textAlign: 'right' as const,
       color: '#ffffff',
     },
     grandTotal: {
       fontSize: '24px',
       fontWeight: 'bold',
-      width: '128px',
+      width: '240px',
       textAlign: 'right' as const,
       color: '#ffffff',
     },
