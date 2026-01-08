@@ -29,6 +29,10 @@ export async function generatePDF(
       format: 'a4',
     });
 
+    // Fill background with dark color (#1a1a1a)
+    pdf.setFillColor(26, 26, 26);
+    pdf.rect(0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight(), 'F');
+
     pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
     pdf.save(`${invoiceNumber}.pdf`);
   } catch (error) {
