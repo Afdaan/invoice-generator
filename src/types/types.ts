@@ -23,7 +23,6 @@ export interface PaymentDetails {
 export interface InvoiceData {
   invoiceNumber: string;
   issueDate: string;
-  dueDate: string;
   from: CompanyInfo;
   to: CompanyInfo;
   items: LineItem[];
@@ -36,7 +35,6 @@ export interface InvoiceData {
 export const defaultInvoiceData: InvoiceData = {
   invoiceNumber: 'INV-01',
   issueDate: new Date().toISOString().split('T')[0],
-  dueDate: new Date().toISOString().split('T')[0],
   from: {
     name: 'Your Company',
     email: 'email@company.com',

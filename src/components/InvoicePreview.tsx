@@ -140,10 +140,6 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
           <span style={styles.label}>Issue date: </span>
           <span style={styles.value}>{data.issueDate}</span>
         </div>
-        <div>
-          <span style={styles.label}>Due date: </span>
-          <span style={styles.value}>{data.dueDate}</span>
-        </div>
       </div>
 
       {/* From / To */}

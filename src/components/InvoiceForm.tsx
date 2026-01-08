@@ -79,7 +79,7 @@ export default function InvoiceForm({ data, onChange }: InvoiceFormProps) {
       {/* Invoice Info */}
       <div className={sectionClass}>
         <h3 className="text-lg font-semibold text-white mb-3">Invoice Info</h3>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 gap-3">
           <div>
             <label className={labelClass}>Invoice Number</label>
             <input
@@ -95,15 +95,6 @@ export default function InvoiceForm({ data, onChange }: InvoiceFormProps) {
               type="date"
               value={data.issueDate}
               onChange={(e) => updateField('issueDate', e.target.value)}
-              className={inputClass}
-            />
-          </div>
-          <div>
-            <label className={labelClass}>Due Date</label>
-            <input
-              type="date"
-              value={data.dueDate}
-              onChange={(e) => updateField('dueDate', e.target.value)}
               className={inputClass}
             />
           </div>
