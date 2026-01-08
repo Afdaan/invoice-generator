@@ -79,7 +79,7 @@ export default function InvoiceForm({ data, onChange }: InvoiceFormProps) {
       {/* Invoice Info */}
       <div className={sectionClass}>
         <h3 className="text-lg font-semibold text-white mb-3">Invoice Info</h3>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-3 gap-3">
           <div>
             <label className={labelClass}>Invoice Number</label>
             <input
@@ -97,6 +97,17 @@ export default function InvoiceForm({ data, onChange }: InvoiceFormProps) {
               onChange={(e) => updateField('issueDate', e.target.value)}
               className={inputClass}
             />
+          </div>
+          <div>
+            <label className={labelClass}>Currency</label>
+            <select
+              value={data.currency}
+              onChange={(e) => updateField('currency', e.target.value as 'USD' | 'IDR')}
+              className={inputClass}
+            >
+              <option value="USD">USD ($)</option>
+              <option value="IDR">IDR (Rp)</option>
+            </select>
           </div>
         </div>
       </div>

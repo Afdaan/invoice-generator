@@ -30,6 +30,7 @@ export interface InvoiceData {
   paymentDetails: PaymentDetails;
   note: string;
   logo?: string;
+  currency: 'USD' | 'IDR';
 }
 
 export const defaultInvoiceData: InvoiceData = {
@@ -66,4 +67,5 @@ export const defaultInvoiceData: InvoiceData = {
     iban: 'IBAN',
   },
   note: '',
+  currency: 'USD',
 };

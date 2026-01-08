@@ -15,9 +15,12 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
   const total = subtotal + tax;
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
+    const currency = data.currency || 'USD';
+    const locale = currency === 'IDR' ? 'id-ID' : 'en-US';
+    return new Intl.NumberFormat(locale, {
       style: 'currency',
-      currency: 'USD',
+      currency: currency,
+      minimumFractionDigits: currency === 'IDR' ? 0 : 2,
     }).format(amount);
   };
 
