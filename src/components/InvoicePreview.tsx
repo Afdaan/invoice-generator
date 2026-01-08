@@ -31,20 +31,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
       fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace',
       width: '595px',
     },
-    logo: {
-      width: '56px',
-      height: '56px',
-      backgroundColor: '#ffffff',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginBottom: '32px',
-    },
-    logoText: {
-      color: '#000000',
-      fontSize: '30px',
-      fontWeight: 'bold',
-    },
+
     headerRow: {
       display: 'flex',
       gap: '32px',
@@ -141,10 +128,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
 
   return (
     <div id="invoice-preview" style={styles.container}>
-      {/* Logo */}
-      <div style={styles.logo}>
-        <span style={styles.logoText}>L</span>
-      </div>
+
 
       {/* Invoice Header */}
       <div style={styles.headerRow}>
